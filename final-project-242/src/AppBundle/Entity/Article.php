@@ -199,7 +199,7 @@ class Article
     {
         return $this->imageFile;
     }
-
+    
     /**
      * @param string $imageName
      *
