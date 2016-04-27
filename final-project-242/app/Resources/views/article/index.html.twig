@@ -6,7 +6,6 @@
     <table>
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Title</th>
                 <th>Category</th>
                 <th>Actions</th>
@@ -15,23 +14,29 @@
         <tbody>
         {% for article in articles %}
             <tr>
-                <td><a href="{{ path('article_show', { 'id': article.id }) }}">{{ article.id }}</a></td>
-                <td>{{ article.title }}</td>
+                <td><a href="{{ path('article_show', { 'id': article.id }) }}">{{ article.title }}</a></td>
                 <td>{% for category in article.categories %}
                     <li>{{ category }}</li>
                 {% endfor %}
-            </ul></td>
-            </tr>
+                    </ul>
+                </td>
+                {% if is_granted('ROLE_ADMIN') %}
                 <td>
                     <ul>
                         <li>
-                            <a href="{{ path('article_show', { 'id': article.id }) }}">show</a>
-                        </li>
-                        <li>
                             <a href="{{ path('article_edit', { 'id': article.id }) }}">edit</a>
                         </li>
+                        {#
+                        <li>
+                            {{ form_start(delete_form) }}
+                                <input type="submit" value="Delete">
+                            {{ form_end(delete_form) }}
+                        </li>
+                        #}
+                        
                     </ul>
                 </td>
+                {% endif %}
             </tr>
         {% endfor %}
         </tbody>

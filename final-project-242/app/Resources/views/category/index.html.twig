@@ -17,7 +17,12 @@
             <tr>
                 <td><a href="{{ path('category_show', { 'id': category.id }) }}">{{ category.id }}</a></td>
                 <td>{{ category.name }}</td>
-                <td>{% if category.articles %}{{ category.articles|join(', ') }}{% endif %}</td>
+                <td>{% if category.articles %}
+                {% for article in category.articles %}
+                    <a href="../article/{{article.id}}">{{ article }}</a> 
+                {% endfor %}
+                
+                {{ category.articles|join(', ') }}{% endif %}</td>
                 <td>
                     <ul>
                         <li>

@@ -20,8 +20,8 @@
     <div class="nav-container">
         <ul class="nav">
             <li class="active">
-              {% if app.request.attributes.get('_route') == 'homepage' %}
-              <a href="#">
+              {% if app.request.getPathInfo == '/login' %}
+              <a href="../app_dev.php">
               {% else %}
               <a href="../">
               {% endif %}
@@ -77,15 +77,33 @@
                 <h1 class="headline">Welcome to the <span id="herald"> Better Herald</span></h1>
             </div>
             <div id="newbox">
-            {% block body %}{% endblock %}
+                <div>
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                        <a href="{{ path('fos_user_security_logout') }}">
+                            {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                        </a>
+                    {% else %}
+                        <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                    {% endif %}
+                    
+                    <h1>Test</h1>
+                </div>
+        
+                {% for type, messages in app.session.flashBag.all %}
+                    {% for message in messages %}
+                        <div class="{{ type }}">
+                            {{ message|trans({}, 'FOSUserBundle') }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+        
+                <div>
+                    {% block fos_user_content %}
+                    {% endblock fos_user_content %}
+                </div>
             </div> 
-           
-
         </div>
     </div>
-
-        {% block javascripts %}{% endblock %}
     </body>
 </html>
-
-

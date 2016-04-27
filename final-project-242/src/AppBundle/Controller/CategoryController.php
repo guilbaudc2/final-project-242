@@ -40,7 +40,7 @@ class CategoryController extends Controller
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
-    {
+    {   $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
         $category = new Category();
         $form = $this->createForm('AppBundle\Form\CategoryType', $category);
         $form->handleRequest($request);
@@ -82,7 +82,7 @@ class CategoryController extends Controller
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Category $category)
-    {
+    {   $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
         $deleteForm = $this->createDeleteForm($category);
         $editForm = $this->createForm('AppBundle\Form\CategoryType', $category);
         $editForm->handleRequest($request);
@@ -109,7 +109,7 @@ class CategoryController extends Controller
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, Category $category)
-    {
+    {   $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
         $form = $this->createDeleteForm($category);
         $form->handleRequest($request);
 
@@ -130,7 +130,7 @@ class CategoryController extends Controller
      * @return \Symfony\Component\Form\Form The form
      */
     private function createDeleteForm(Category $category)
-    {
+    {   $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('category_delete', array('id' => $category->getId())))
             ->setMethod('DELETE')

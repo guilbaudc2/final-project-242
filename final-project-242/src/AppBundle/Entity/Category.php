@@ -32,7 +32,7 @@ class Category
     /**
      * @var array
      * 
-     * @ORM\ManyToMany(targetEntity="Article", mappedBy="categories")
+     * @ORM\ManyToMany(targetEntity="Article", mappedBy="categories", cascade={"all"})
      * @ORM\JoinTable(name="articles_groups")
      */
     private $articles;

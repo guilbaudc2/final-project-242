@@ -67,9 +67,15 @@ swiftmailer:
 
 # app/config/config.yml
 fos_user:
-    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    db_driver: orm 
     firewall_name: main
     user_class: AppBundle\Entity\User
+    registration:
+        confirmation:
+            enabled: true
+            from_email:
+                address:        noreply@betterherald.com
+                sender_name:    The Better Herald Registration
     
 # app/config/config.yml
 vich_uploader:
@@ -77,6 +83,6 @@ vich_uploader:
 
     mappings:
         article_image:
-            uri_prefix:         /images/articles
+            uri_prefix:         ../../bundles/images/articles
             upload_destination: %kernel.root_dir%/../web/bundles/images/articles
             namer:              vich_uploader.namer_uniqid

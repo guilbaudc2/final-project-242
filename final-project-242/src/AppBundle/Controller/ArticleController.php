@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Article;
@@ -41,6 +42,7 @@ class ArticleController extends Controller
      */
     public function newAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
         $article = new Article();
         $form = $this->createForm('AppBundle\Form\ArticleType', $article);
         $form->handleRequest($request);
@@ -67,6 +69,7 @@ class ArticleController extends Controller
      */
     public function showAction(Article $article)
     {
+        //$this->denyAccessUnlessGranted('ROLE_USER', null, 'Unable to access this page!');
         $deleteForm = $this->createDeleteForm($article);
 
         return $this->render('article/show.html.twig', array(
@@ -82,7 +85,7 @@ class ArticleController extends Controller
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Article $article)
-    {
+    {   $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
         $deleteForm = $this->createDeleteForm($article);
         $editForm = $this->createForm('AppBundle\Form\ArticleType', $article);
         $editForm->handleRequest($request);
@@ -109,7 +112,7 @@ class ArticleController extends Controller
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, Article $article)
-    {
+    {   $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
         $form = $this->createDeleteForm($article);
         $form->handleRequest($request);
 
@@ -130,7 +133,7 @@ class ArticleController extends Controller
      * @return \Symfony\Component\Form\Form The form
      */
     private function createDeleteForm(Article $article)
-    {
+    {   $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('article_delete', array('id' => $article->getId())))
             ->setMethod('DELETE')

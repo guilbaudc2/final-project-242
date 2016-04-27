@@ -1,31 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+{% if is_granted('ROLE_USER') %}
     <h1>Article</h1>
-
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ article.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ article.title }}</td>
-            </tr>
-            <tr>
-                <th>Content</th>
-                <td>{{ article.content }}</td>
-            </tr>
-            <tr>
-                <th>Image</th>
-                <td><img src="{{ vich_uploader_asset(article, 'imageFile', 'AppBundle\\Entity\\Article') }}"></td>
-            </tr>
+    <h2>{{ article.title }}</h2>
+    <p>{{ article.content|raw }}</p>
+    <img src="{{ vich_uploader_asset(article, 'imageFile', 'AppBundle\\Entity\\Article') }}">
             <tr>
                 <th>Category</th>
                 <td><ul>
                 {% for category in article.categories %}
-                    <li>{{ category }}</li>
+                    <li><a href="../category/{{category.id}}">{{ category }}</a></li>
                 {% endfor %}
             </ul></td>
             </tr>
@@ -39,10 +24,14 @@
         <li>
             <a href="{{ path('article_edit', { 'id': article.id }) }}">Edit</a>
         </li>
+        {% if is_granted('ROLE_ADMIN') %}
         <li>
             {{ form_start(delete_form) }}
                 <input type="submit" value="Delete">
             {{ form_end(delete_form) }}
         </li>
+        {% endif %}
     </ul>
+{% endif %}
+
 {% endblock %}

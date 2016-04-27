@@ -3,22 +3,13 @@
 {% block body %}
     <h1>Category</h1>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ category.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ category.name }}</td>
-            </tr>
-            <tr>
-                <th>Articles</th>
-                <td>{% if category.articles %}{{ category.articles|join(', ') }}{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
+    <h2>{{ category.name }}</h2>
+    <h3>Articles</h3>
+    {% if category.articles %}
+        {% for article in category.articles %}
+            <a href="../article/{{article.id}}">{{ article }}</a> 
+        {% endfor %}
+    {% endif %}
 
     <ul>
         <li>
@@ -27,10 +18,12 @@
         <li>
             <a href="{{ path('category_edit', { 'id': category.id }) }}">Edit</a>
         </li>
+        {% if is_granted('ROLE_ADMIN') %}
         <li>
             {{ form_start(delete_form) }}
                 <input type="submit" value="Delete">
             {{ form_end(delete_form) }}
         </li>
+        {% endif %}
     </ul>
 {% endblock %}
