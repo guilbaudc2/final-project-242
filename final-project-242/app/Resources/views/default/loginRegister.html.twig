@@ -2,7 +2,7 @@
 
 {% block body %}
  
-     <h2>Recent Articles</h2>
+     <h2>Top Articles</h2>
        {% for article in articles %}
           {% if loop.index0 < 3 %}
                 <h3>{{ article.title }}</h3>
