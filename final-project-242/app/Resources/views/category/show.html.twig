@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Category</h1>
+    <h1>Category:</h1>
 
     <h2>{{ category.name }}</h2>
-    <h3>Articles</h3>
+    <h3>Articles:</h3>
     {% if category.articles %}
         {% for article in category.articles %}
             <a href="../article/{{article.id}}">{{ article }}</a> 
@@ -13,7 +13,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('category_index') }}">Back to the list</a>
+            <a href="{{ path('category_index') }}">Back to the List</a>
         </li>
         <li>
             <a href="{{ path('category_edit', { 'id': category.id }) }}">Edit</a>
