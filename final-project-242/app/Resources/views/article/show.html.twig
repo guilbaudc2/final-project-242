@@ -21,10 +21,10 @@
         <li>
             <a href="{{ path('article_index') }}">Back to the List</a>
         </li>
+        {% if is_granted('ROLE_ADMIN') %}
         <li>
             <a href="{{ path('article_edit', { 'id': article.id }) }}">Edit</a>
         </li>
-        {% if is_granted('ROLE_ADMIN') %}
         <li>
             {{ form_start(delete_form) }}
                 <input type="submit" value="Delete">
@@ -32,6 +32,12 @@
         </li>
         {% endif %}
     </ul>
-{% endif %}
+ {% else %}
+  
+ <h2>You must have an account to view this content. Why not login or register for an account?</h2>
+
+ <a href="/final-project-242/web/app_dev.php/login">Login</a>
+ <a href="/final-project-242/web/app_dev.php/register">Register</a>
+            {% endif %}
 
 {% endblock %}

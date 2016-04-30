@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+{% if is_granted('ROLE_ADMIN') %}
     <h1>Category creation</h1>
 
     {{ form_start(form) }}
@@ -13,4 +14,8 @@
             <a href="{{ path('category_index') }}">Back to the List</a>
         </li>
     </ul>
+{% else %}
+<h2>You are not authorized to view this page.</h2>
+    
+{% endif %}
 {% endblock %}

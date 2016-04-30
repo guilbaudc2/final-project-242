@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+{% if is_granted('ROLE_USER') %}
     <h1>Article list</h1>
 
     <table>
@@ -8,7 +9,9 @@
             <tr>
                 <th>Title</th>
                 <th>Category</th>
+                {% if is_granted('ROLE_ADMIN') %}
                 <th>Actions</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -16,7 +19,7 @@
             <tr>
                 <td><a href="{{ path('article_show', { 'id': article.id }) }}">{{ article.title }}</a></td>
                 <td>{% for category in article.categories %}
-                    <li>{{ category }}</li>
+                    <li><a href="../category/{{category.id}}">{{ category }}</a></li>
                 {% endfor %}
                     </ul>
                 </td class="different">
@@ -41,10 +44,18 @@
         {% endfor %}
         </tbody>
     </table>
-
+{% if is_granted('ROLE_ADMIN') %}
     <ul>
         <li>
             <a href="{{ path('article_new') }}">Create a New Entry</a>
         </li>
     </ul>
+ {% endif %}
+ {% else %}
+ 
+ <h2>You must have an account to view this content. Why not login or register for an account?</h2>
+
+ <a href="/final-project-242/web/app_dev.php/login">Login</a>
+ <a href="/final-project-242/web/app_dev.php/register">Register</a>
+            {% endif %}
 {% endblock %}

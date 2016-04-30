@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+{% if is_granted('ROLE_USER') %}
     <h1>Category:</h1>
 
     <h2>{{ category.name }}</h2>
@@ -15,10 +16,11 @@
         <li>
             <a href="{{ path('category_index') }}">Back to the List</a>
         </li>
+        {% if is_granted('ROLE_ADMIN') %}
         <li>
             <a href="{{ path('category_edit', { 'id': category.id }) }}">Edit</a>
         </li>
-        {% if is_granted('ROLE_ADMIN') %}
+        
         <li>
             {{ form_start(delete_form) }}
                 <input type="submit" value="Delete">
@@ -26,4 +28,12 @@
         </li>
         {% endif %}
     </ul>
+ {% else %}
+ 
+ <h2>You must have an account to view this content. Why not login or register for an account?</h2>
+
+ <a href="/final-project-242/web/app_dev.php/login">Login</a>
+ <a href="/final-project-242/web/app_dev.php/register">Register</a>
+
+ {% endif %} 
 {% endblock %}

@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ArticleType extends AbstractType
+class ArticleEditType extends ArticleType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -14,16 +14,10 @@ class ArticleType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('title')
-            ->add('content', 'textarea', array('attr' => array('class' => 'tinymce')))
-            ->add('imageFile', 'file', array(
-                'data_class' => null,
-                'required' => false
-            ))
-            ->add('image_name', 'text', array( 'label' => 'Image Name', 'data' => 'Image Name' ))
-            ->add('categories')
-        ;
+            parent::buildForm($builder, $options); // Add default fields.
+
+        $builder->remove('image_name', 'text', array( 'label' => 'Image Name', 'data' => 'Image Name' ));
+        $builder->add('image_name');
     }
     
     /**
